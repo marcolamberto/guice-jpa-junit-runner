@@ -16,6 +16,9 @@ import com.google.common.collect.Sets;
 import com.google.inject.AbstractModule;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor
 public class GuiceJPAPersistModule extends AbstractModule {
 	private final Collection<Package> entitiesPackages = Lists.newArrayList();
 
