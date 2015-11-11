@@ -46,7 +46,6 @@ public class GuiceJPAPersistModule extends AbstractModule {
 		if (entitiesPackages.isEmpty()) {
 			entitiesClasses.addAll(new Reflections("").getTypesAnnotatedWith(Entity.class));
 		}
-		System.err.println(entitiesClasses.size());
 
 		properties.put(AvailableSettings.LOADED_CLASSES, Lists.newArrayList(entitiesClasses));
 
