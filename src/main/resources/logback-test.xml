@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %t %p: %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="com.skillbill" level="DEBUG" />
+	<!--
+	<logger name="org.hibernate" level="DEBUG" />
+	<logger name="org.hibernate.type" level="DEBUG" />
+	<logger name="org.hibernate.sql" level="DEBUG" />
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="org.quartz" level="INFO" />
+	<logger name="org.apache" level="INFO" />
+	<logger name="org.apache.struts2" level="INFO" />
+	<logger name="com.opensymphony.xwork2" level="INFO" />
+	<logger name="com.opensymphony.xwork.interceptor" level="INFO" />
+	<logger name="freemarker.cache" level="INFO" />
+	<logger name="freemarker.beans" level="INFO" />
+	<logger name="httpclient" level="INFO" />
+	<logger name="httpclient.wire.content" level="INFO" />
+	-->
+
+	<root level="WARN">
+		<appender-ref ref="STDOUT" />
+	</root>
+</configuration>
