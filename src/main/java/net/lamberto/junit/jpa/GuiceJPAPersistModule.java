@@ -43,6 +43,10 @@ public class GuiceJPAPersistModule extends AbstractModule {
 			entitiesClasses.addAll(new Reflections(entitiesPackage.getName()).getTypesAnnotatedWith(Entity.class));
 		}
 
+		if (entitiesPackages.isEmpty()) {
+			entitiesClasses.addAll(new Reflections().getTypesAnnotatedWith(Entity.class));
+		}
+
 		properties.put(AvailableSettings.LOADED_CLASSES, Lists.newArrayList(entitiesClasses));
 
 		install(new JpaPersistModule("GuicePersistTest").properties(properties));
