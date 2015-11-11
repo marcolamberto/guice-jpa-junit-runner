@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>guice-jpa-junit-runner</artifactId>
 	<groupId>net.lamberto.junit.jpa</groupId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Guice JPA JUnit Runner</name>
