@@ -7,7 +7,7 @@
 	<packaging>jar</packaging>
 
 	<name>Guice JPA JUnit Runner</name>
-	<description>A JUnit Runner allowing Guice-based testing. Each test method is running with a clean Injector instance.</description>
+	<description>A JUnit Runner allowing Guice-based testing with JPA Hibernate4-based. Each test method is running with a clean Injector instance.</description>
 	<url>https://github.com/marcolamberto/guice-jpa-junit-runner</url>
 
 	<licenses>
@@ -97,18 +97,6 @@
 	     </dependency>
 
 		<!-- Persistence -->
-		<!--
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.1-api</artifactId>
-			<version>1.0.0.Final</version>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
