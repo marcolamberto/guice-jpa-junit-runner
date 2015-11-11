@@ -1,9 +1,9 @@
 package net.lamberto.junit.jpa;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -14,6 +14,7 @@ import org.junit.runners.model.FrameworkMethod;
 import org.junit.runners.model.InitializationError;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.collect.Collections2;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -27,15 +28,13 @@ import net.lamberto.junit.GuiceJUnitRunner.GuiceModules;
 
 @Slf4j
 public class GuiceJPAPersistJUnitRunner extends BlockJUnit4ClassRunner {
-    private final List<Class<? extends Module>> classes;
 	private PersistService persistService;
 	private Provider<EntityManager> entityManager;
+	private Collection<Class<? extends Module>> modules;
 
 
-	public GuiceJPAPersistJUnitRunner(final Class<? extends Module> testClass) throws InitializationError {
+	public GuiceJPAPersistJUnitRunner(final Class<?> testClass) throws InitializationError {
 		super(testClass);
-
-	    classes = getModulesFor(testClass);
     }
 
     private Injector createInjectorFor(final Collection<Class<? extends Module>> classes) throws InitializationError {
@@ -48,17 +47,31 @@ public class GuiceJPAPersistJUnitRunner extends BlockJUnit4ClassRunner {
 		}));
     }
 
-	private List<Class<? extends Module>> getModulesFor(final Class<?> testClass) throws InitializationError {
-        final GuiceModules annotation = testClass.getAnnotation(GuiceModules.class);
+	private Collection<Class<? extends Module>> getModulesFor(final Class<?> module) throws InitializationError {
+        final GuiceModules annotation = module.getAnnotation(GuiceModules.class);
 
         return annotation == null ?
-    		Collections.<Class<? extends Module>>singletonList(GuiceJPAPersistModule.class) :
-			Arrays.asList(annotation.value());
+    		null :
+			asList(annotation.value());
     }
+
+	private Collection<Class<? extends Module>> getModulesFor(final FrameworkMethod method) throws InitializationError {
+        final GuiceModules annotation = method.getAnnotation(GuiceModules.class);
+
+        return annotation == null ?
+    		null :
+			asList(annotation.value());
+    }
+
+	private Collection<Class<? extends Module>> getModulesFor(final FrameworkMethod method, final Class<?> module) throws InitializationError {
+		return Optional.fromNullable(getModulesFor(method))
+			.or(Optional.fromNullable(getModulesFor(module))
+				.or(Collections.<Class<? extends Module>>singleton(GuiceJPAPersistModule.class)));
+	}
 
 	@Override
 	protected Object createTest() throws Exception {
-        final Injector injector = createInjectorFor(classes);
+        final Injector injector = createInjectorFor(modules);
 
         persistService = injector.getInstance(PersistService.class);
 		persistService.start();
@@ -71,7 +84,11 @@ public class GuiceJPAPersistJUnitRunner extends BlockJUnit4ClassRunner {
 	@Override
 	protected void runChild(final FrameworkMethod method, final RunNotifier notifier) {
 		try {
+			modules = getModulesFor(method, method.getDeclaringClass());
+
 			super.runChild(method, notifier);
+		} catch (final InitializationError e) {
+			throw new IllegalArgumentException(e);
 		} finally {
 			if (persistService != null) {
 				try {
