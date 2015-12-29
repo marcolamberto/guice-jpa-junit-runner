@@ -36,7 +36,9 @@ public class GuiceJPAPersistModule extends AbstractModule {
 
 		final Properties properties = new Properties();
 
-		properties.put("hibernate.ejb.entitymanager_factory_name", "EF." + System.currentTimeMillis());
+		final long now = System.currentTimeMillis();
+		properties.setProperty("javax.persistence.jdbc.url", String.format("jdbc:hsqldb:mem:testdb-%d;shutdown=true", now));
+		properties.setProperty("hibernate.ejb.entitymanager_factory_name", String.format("EF-%d", now));
 
 		final Set<Class<?>> entitiesClasses = Sets.newHashSet();
 		for (final Package entitiesPackage : entitiesPackages) {
