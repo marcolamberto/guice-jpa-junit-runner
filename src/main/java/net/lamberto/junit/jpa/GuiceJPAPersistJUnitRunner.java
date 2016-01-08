@@ -64,9 +64,10 @@ public class GuiceJPAPersistJUnitRunner extends BlockJUnit4ClassRunner {
     }
 
 	private Collection<Class<? extends Module>> getModulesFor(final FrameworkMethod method, final Class<?> module) throws InitializationError {
-		return Optional.fromNullable(getModulesFor(method))
-			.or(Optional.fromNullable(getModulesFor(module))
-				.or(Collections.<Class<? extends Module>>singleton(GuiceJPAPersistModule.class)));
+		return Optional
+			.fromNullable(getModulesFor(method))
+			.or(Optional.fromNullable(getModulesFor(module)))
+			.or(Collections.<Class<? extends Module>>singleton(GuiceJPAPersistModule.class));
 	}
 
 	@Override
