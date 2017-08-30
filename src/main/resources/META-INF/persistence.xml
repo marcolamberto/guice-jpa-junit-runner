@@ -10,14 +10,18 @@
 		<properties>
             <property name="javax.persistence.validation.mode" value="DDL, CALLBACK" />
 			<property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver" />
-			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb" />
+			<!--
+			<property name="javax.persistence.jdbc.url" value="jdbc:hsqldb:mem:testdb;shutdown=true" />
+			-->
 			<property name="javax.persistence.jdbc.user" value="sa" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="hibernate.archive.autodetection" value="class"/>
 
 			<property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect" />
-            <property name="hibernate.hbm2ddl.auto" value="create-drop" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <!--
 			<property name="org.hibernate.flushMode" value="COMMIT"/>
+            -->
 
 			<property name="hibernate.jdbc.batch_size" value="1000"/>
 			<property name="hibernate.jdbc.fetch_size" value="1000"/>
@@ -27,8 +31,8 @@
 			<property name="hibernate.cache.use_query_cache" value="false"/>
 			<property name="hibernate.cache.use_second_level_cache" value="false"/>
 
-			<property name="hibernate.c3p0.min_size" value="10"/>
 			<!--
+			<property name="hibernate.c3p0.min_size" value="10"/>
 			<property name="hibernate.c3p0.max_size" value="20"/>
 			<property name="hibernate.c3p0.acquire_increment" value="1"/>
 			<property name="hibernate.c3p0.idle_test_period" value="3000"/>
